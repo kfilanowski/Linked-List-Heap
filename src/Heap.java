@@ -11,9 +11,9 @@ public class Heap {
      * @param inputFile Name of the input file to be read.
      * @throws FileNotFoundException if the input file cannot be found.
      */
-    readPaths(String inputFile) throws FileNotFoundException {
+    // readPaths(String inputFile) throws FileNotFoundException {
     	
-    }
+    // }
     /**
      * Recursively builds a complete binary tree. Places PathNode objects in tempPath into a
      * complete binary tree in order of appearance in the text file. The left child of a parent
@@ -24,17 +24,17 @@ public class Heap {
      * @param parent    Parent of the current node.
      * @return A reference to the node just placed in the tree.
      */
-    PathNode buildCompleteTree(int index, int parent) {
+    // PathNode buildCompleteTree(int index, int parent) {
     	
-    }
+    // }
     
     /**
      * Recursive method that sets isLevelEnd.
      * @param root Root of the subtree.
      */
-    setLevelEnd(PathNode root) {
+    // setLevelEnd(PathNode root) {
     	
-    }
+    // }
     
     /**
      * Recursive method that sets the "generation" link of PathNode objects from left-to-right.
@@ -42,16 +42,23 @@ public class Heap {
      * cousins)
      * @param root Root of the subtree.
      */
-    setGenerationLinks(PathNode root) {
+    // setGenerationLinks(PathNode root) {
     	
-    }
+    // }
     
     /**
      * Prints the path lengths from left-to-right at each level in the tree in the form specified
      * by the instructions.
      * @param root Root of the whole tree to begin printing from.
      */
-    printTreeLevels(PathNode root) {
+    // printTreeLevels(PathNode root) {
     	
+    // }
+
+    /**
+     * Just a way to test Heap.
+     */
+    public static void main(String[] args) {
+        System.out.println("Testing Heap..");
     }
 }
