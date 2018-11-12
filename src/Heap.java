@@ -29,9 +29,10 @@ public class Heap {
         // Used to hold a line in the input file.
         String line;
         // Used to store the path and pass into a PathNode.
-        ArrayList<Integer> path = new ArrayList<Integer>();
+        ArrayList<Integer> path;
 
         while (in.hasNextLine()) {
+            path = new ArrayList<Integer>();
             line = in.nextLine().trim(); // Grabs one line from the input file.
             // We need to extract each integer from line and place it into the arraylist path.
             String[] arr = line.split("\\s");
@@ -40,7 +41,6 @@ public class Heap {
             }
             // Then we need to add a new PathNode to tempPath and pass in the path arraylist.
             tempPath.add(new PathNode(path));
-            path.clear();
         }
         in.close();
     }
@@ -54,9 +54,28 @@ public class Heap {
      * @param parent    Parent of the current node.
      * @return A reference to the node just placed in the tree.
      */
-    // PathNode buildCompleteTree(int index, int parent) {
-    	
-    // }
+    private PathNode buildCompleteTree(int index, int parent) {
+        System.out.println("index is " + index);
+        PathNode temp = tempPath.get(index);
+        System.out.println("parent " + temp);
+
+        if (index >= (tempPath.size())-1 / 2) {
+            return temp;
+        }
+
+        temp.setLeft(tempPath.get(2*index+1));
+        temp.getLeft().setParent(temp);
+        System.out.println("left " + temp.getLeft());
+
+        if (index >= ((tempPath.size()-2) / 2)) {
+            return temp;
+        }
+        temp.setRight(tempPath.get(2*index+2));
+        temp.getRight().setParent(temp);
+        System.out.println("right " + temp.getRight());
+        
+        return buildCompleteTree(++index, 0);
+    }
     
     /**
      * Recursive method that sets isLevelEnd.
@@ -93,6 +112,8 @@ public class Heap {
         Heap heap = new Heap();
         try {
         heap.readPaths("input.txt");
+        heap.buildCompleteTree(0, 0);
+        //System.out.println(heap.tempPath);
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         }

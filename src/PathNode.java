@@ -24,11 +24,43 @@ public class PathNode implements Comparable<PathNode> {
 	public int compareTo(PathNode o) {
 		// TODO Auto-generated method stub
         int value = 0;
-        if(this.path.size()-1 < o.path.size(-1)){
+        if(this.path.size()-1 < o.path.size()-1){
             value = -1;
         }else if(this.path.size()-1 > o.path.size()-1){
             value = 1;
         }
 		return value;
-	}
+    }
+    
+    public ArrayList<Integer> getPath() {
+        return path;
+    }
+
+    public void setLeft(PathNode left) {
+        this.left = left;
+    }
+    
+    public void setRight(PathNode right) {
+        this.right = right;
+    }
+
+    public void setParent(PathNode parent) {
+        this.parent = parent;
+    }
+
+    public PathNode getLeft() {
+        return left;
+    }
+
+    public PathNode getRight() {
+        return right;
+    }
+
+    public PathNode getParent() {
+        return parent;
+    }
+
+    public String toString() {
+        return "" + (path.size()-1) + "(" + path + ")";
+    }
 }
