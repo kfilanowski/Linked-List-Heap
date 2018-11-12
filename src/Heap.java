@@ -32,11 +32,15 @@ public class Heap {
         ArrayList<Integer> path = new ArrayList<Integer>();
 
         while (in.hasNextLine()) {
-            line = in.nextLine().trim(); // Grabs one line (One path).
-            // we need to extract each integer from line and place it into the arraylist path.
-            //path.add(index, element);
+            line = in.nextLine().trim(); // Grabs one line from the input file.
+            // We need to extract each integer from line and place it into the arraylist path.
+            String[] arr = line.split("\\s");
+            for (String s : arr) {
+                path.add(Integer.parseInt(s));
+            }
             // Then we need to add a new PathNode to tempPath and pass in the path arraylist.
-            //tempPath.add(new PathNode(path));
+            tempPath.add(new PathNode(path));
+            path.clear();
         }
         in.close();
     }
