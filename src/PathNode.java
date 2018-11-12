@@ -23,6 +23,12 @@ public class PathNode implements Comparable<PathNode> {
 	@Override
 	public int compareTo(PathNode o) {
 		// TODO Auto-generated method stub
-		return 0;
+        int value = 0;
+        if(this.path.size()-1 < o.path.size(-1)){
+            value = -1;
+        }else if(this.path.size()-1 > o.path.size()-1){
+            value = 1;
+        }
+		return value;
 	}
 }
