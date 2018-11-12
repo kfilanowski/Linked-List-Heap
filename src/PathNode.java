@@ -15,6 +15,10 @@ public class PathNode implements Comparable<PathNode> {
     private boolean isLevelEnd;
     /** True if the node is the right-most node in the last level. */
     private boolean isLastNode;
+
+    public PathNode(ArrayList<Integer> path) {
+        this.path = path;
+    }
     
 	@Override
 	public int compareTo(PathNode o) {

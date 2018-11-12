@@ -1,19 +1,45 @@
 import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.File;
+import java.util.Scanner;
 
 public class Heap {
 	/** Temporary storage for the paths starting at tempPath[1]. */
     private ArrayList<PathNode> tempPath;
+
+    /**
+     * 
+     */
+    public Heap() {
+        tempPath = new ArrayList<PathNode>();
+    }
+
     /**
      * Reads inputFile given at the command line and places the contents of each line into the
      * path field found in each PathNode object. The order is the same as found in the text file.
      * Adds the PathNode object to tempPath starting at tempPath[1].
-     *
      * @param inputFile Name of the input file to be read.
      * @throws FileNotFoundException if the input file cannot be found.
      */
-    // readPaths(String inputFile) throws FileNotFoundException {
-    	
-    // }
+    public void readPaths(String inputFile) throws FileNotFoundException {
+        // The input file.
+        File readFile = new File(inputFile);
+        // Scans the input file.
+        Scanner in = new Scanner(readFile);
+        // Used to hold a line in the input file.
+        String line;
+        // Used to store the path and pass into a PathNode.
+        ArrayList<Integer> path = new ArrayList<Integer>();
+
+        while (in.hasNextLine()) {
+            line = in.nextLine().trim(); // Grabs one line (One path).
+            // we need to extract each integer from line and place it into the arraylist path.
+            //path.add(index, element);
+            // Then we need to add a new PathNode to tempPath and pass in the path arraylist.
+            //tempPath.add(new PathNode(path));
+        }
+        in.close();
+    }
     /**
      * Recursively builds a complete binary tree. Places PathNode objects in tempPath into a
      * complete binary tree in order of appearance in the text file. The left child of a parent
@@ -56,9 +82,15 @@ public class Heap {
     // }
 
     /**
-     * Just a way to test Heap.
+     * Just a way to test Heap. DELETE THIS WHEN FINISHED.
      */
     public static void main(String[] args) {
         System.out.println("Testing Heap..");
+        Heap heap = new Heap();
+        try {
+        heap.readPaths("input.txt");
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }
