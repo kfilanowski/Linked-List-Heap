@@ -19,6 +19,7 @@ public class Heap {
         tempPath = new ArrayList<PathNode>();
     }
 
+
     /**
      * Reads inputFile given at the command line and places the contents of each line into the
      * path field found in each PathNode object. The order is the same as found in the text file.
@@ -49,6 +50,8 @@ public class Heap {
         }
         in.close();
     }
+
+
     /**
      * Recursively builds a complete binary tree. Places PathNode objects in tempPath into a
      * complete binary tree in order of appearance in the text file. The left child of a parent
@@ -84,6 +87,7 @@ public class Heap {
         return buildCompleteTree(index+1, parent);
     }
     
+
     /**
      * Recursive method that sets isLevelEnd.
      * @param root Root of the subtree.
@@ -91,12 +95,14 @@ public class Heap {
     private void setLevelEnd(PathNode root) {
         boolean setLevel = true;
         root.setisLevelEnd(setLevel);
+        // goes until the the left subtree is empty
         if(root.getLeft() != null){
-            PathNode nextRoot = root.getLeft();
+            PathNode nextRoot = root.getLeft();//left child
             setLevelEnd(nextRoot);
         }
     }
     
+
     /**
      * Recursive method that sets the "generation" link of PathNode objects from left-to-right.
      * generation is a term I use to indicate nodes on the same level (these may be siblings or
@@ -134,6 +140,7 @@ public class Heap {
             System.out.println(rootLevel.getisLevelEnd());
             System.out.println(rootLevel.getLeft().getisLevelEnd());
             System.out.println(rootLevel.getLeft().getLeft().getisLevelEnd());
+            System.out.println(rootLevel.getLeft().getLeft().getLeft().getisLevelEnd());
             System.out.println("ending setLevelEnd");
 
             // TESTING TREE. Works!
