@@ -3,12 +3,17 @@ import java.io.FileNotFoundException;
 import java.io.File;
 import java.util.Scanner;
 
+/**
+ * // TODO
+ * @author Kevin Filanowski
+ * @author Jake Guinn
+ */
 public class Heap {
-	/** Temporary storage for the paths starting at tempPath[1]. */
+	/** Temporary storage for the path nodes */
     private ArrayList<PathNode> tempPath;
 
     /**
-     * 
+     * Default constructor to intialize a heap tree object.
      */
     public Heap() {
         tempPath = new ArrayList<PathNode>();
@@ -52,29 +57,31 @@ public class Heap {
      *
      * @param index     Index of the current node in tempPath.
      * @param parent    Parent of the current node.
-     * @return A reference to the node just placed in the tree.
+     * @return A reference to the last node placed in the tree.
      */
     private PathNode buildCompleteTree(int index, int parent) {
-        System.out.println("index is " + index);
-        PathNode temp = tempPath.get(index);
-        System.out.println("parent " + temp);
+        // Temporary variable to hold the current node to be inserted.
+        PathNode current = tempPath.get(index);
 
-        if (index >= (tempPath.size())-1 / 2) {
-            return temp;
+        // We do not assign a parent to the root node.
+        if (index != parent) {
+            current.setParent(tempPath.get(parent));
+            // Set current to be parent's left or right child.
+            if (current.getParent().getLeft() == null) { // Left Child.
+                current.getParent().setLeft(current);
+            } else {                                     // Right Child.
+                current.getParent().setRight(current);
+                parent++;
+            }
         }
 
-        temp.setLeft(tempPath.get(2*index+1));
-        temp.getLeft().setParent(temp);
-        System.out.println("left " + temp.getLeft());
-
-        if (index >= ((tempPath.size()-2) / 2)) {
-            return temp;
+        // Base case, Returns the very last node inserted in this graph.
+        if (index + 1 >= tempPath.size()) {
+            return current;
         }
-        temp.setRight(tempPath.get(2*index+2));
-        temp.getRight().setParent(temp);
-        System.out.println("right " + temp.getRight());
-        
-        return buildCompleteTree(++index, 0);
+
+        // Recursive call to continue building the binary tree.
+        return buildCompleteTree(index+1, parent);
     }
     
     /**
@@ -108,12 +115,36 @@ public class Heap {
      * Just a way to test Heap. DELETE THIS WHEN FINISHED.
      */
     public static void main(String[] args) {
-        System.out.println("Testing Heap..");
+        System.out.println("Running Heap..");
         Heap heap = new Heap();
         try {
-        heap.readPaths("input.txt");
-        heap.buildCompleteTree(0, 0);
-        //System.out.println(heap.tempPath);
+            heap.readPaths("input.txt");
+            PathNode node = heap.buildCompleteTree(0, 0);
+            System.out.println("Node retrieved is: " + (node.getPath().size()-1));
+
+            // TESTING TREE. Works!
+            PathNode node_parent = node.getParent();
+            PathNode node_grandparent = node_parent.getParent();
+            PathNode node_root = node_grandparent.getParent();
+            PathNode root_left = node_root.getLeft();
+            PathNode root_left_2 = root_left.getLeft();
+            PathNode root_left_3 = root_left_2.getLeft();
+            PathNode root_left_2_right = root_left_2.getRight();
+            PathNode root_right = node_root.getRight();
+            PathNode root_right_2 = root_right.getRight();
+            PathNode root_right_2_parent = root_right_2.getParent();
+            PathNode root_right_2_parent_left = root_right_2_parent.getLeft();
+            System.out.println(node_parent);
+            System.out.println(node_grandparent);
+            System.out.println(node_root);
+            System.out.println(root_left);
+            System.out.println(root_left_2);
+            System.out.println(root_left_3);
+            System.out.println(root_left_2_right);
+            System.out.println(root_right);
+            System.out.println(root_right_2);
+            System.out.println(root_right_2_parent);
+            System.out.println(root_right_2_parent_left);
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         }

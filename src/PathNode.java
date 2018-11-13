@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * 
+ */
 public class PathNode implements Comparable<PathNode> {
     /** An ArrayList of vertex IDs ordered by appearance in the path. */
     private ArrayList<Integer> path;
@@ -16,10 +19,17 @@ public class PathNode implements Comparable<PathNode> {
     /** True if the node is the right-most node in the last level. */
     private boolean isLastNode;
 
+    /**
+     * 
+     * @param path
+     */
     public PathNode(ArrayList<Integer> path) {
         this.path = path;
     }
     
+    /**
+     * 
+     */
 	@Override
 	public int compareTo(PathNode o) {
 		// TODO Auto-generated method stub
@@ -32,34 +42,65 @@ public class PathNode implements Comparable<PathNode> {
 		return value;
     }
     
+    /**
+     * 
+     * @return
+     */
     public ArrayList<Integer> getPath() {
         return path;
     }
 
+    /**
+     * 
+     * @param left
+     */
     public void setLeft(PathNode left) {
         this.left = left;
     }
     
+    /**
+     * 
+     * @param right
+     */
     public void setRight(PathNode right) {
         this.right = right;
     }
 
+    /**
+     * 
+     * @param parent
+     */
     public void setParent(PathNode parent) {
         this.parent = parent;
     }
 
+    /**
+     * 
+     * @return
+     */
     public PathNode getLeft() {
         return left;
     }
 
+    /**
+     * 
+     * @return
+     */
     public PathNode getRight() {
         return right;
     }
 
+    /**
+     * 
+     * @return
+     */
     public PathNode getParent() {
         return parent;
     }
 
+    /**
+     * 
+     */
     public String toString() {
         return "" + (path.size()-1) + "(" + path + ")";
     }
