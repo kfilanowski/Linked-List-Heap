@@ -25,6 +25,8 @@ public class PathNode implements Comparable<PathNode> {
      */
     public PathNode(ArrayList<Integer> path) {
         this.path = path;
+        isLevelEnd = false;
+        isLastNode = false;
     }
     
     /**
@@ -32,7 +34,6 @@ public class PathNode implements Comparable<PathNode> {
      */
 	@Override
 	public int compareTo(PathNode o) {
-		// TODO Auto-generated method stub
         int value = 0;
         if(this.path.size()-1 < o.path.size()-1){
             value = -1;

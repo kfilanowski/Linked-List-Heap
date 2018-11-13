@@ -90,6 +90,7 @@ public class Heap {
 
     /**
      * Recursive method that sets isLevelEnd.
+     * This is the left node of every level in the tree.
      * @param root Root of the subtree.
      */
     private void setLevelEnd(PathNode root) {
@@ -100,6 +101,13 @@ public class Heap {
         }
     }
     
+
+    /**
+     * Recursive method that sets the last node's isLastNode property to true.
+     */
+    private void setLastNode() {
+
+    }
 
     /**
      * Recursive method that sets the "generation" link of PathNode objects from left-to-right.
