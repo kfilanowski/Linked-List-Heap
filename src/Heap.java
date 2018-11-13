@@ -88,9 +88,14 @@ public class Heap {
      * Recursive method that sets isLevelEnd.
      * @param root Root of the subtree.
      */
-    // setLevelEnd(PathNode root) {
-    	
-    // }
+    private void setLevelEnd(PathNode root) {
+        boolean setLevel = true;
+        root.setisLevelEnd(setLevel);
+        if(root.getLeft() != null){
+            PathNode nextRoot = root.getLeft();
+            setLevelEnd(nextRoot);
+        }
+    }
     
     /**
      * Recursive method that sets the "generation" link of PathNode objects from left-to-right.
@@ -121,6 +126,15 @@ public class Heap {
             heap.readPaths("input.txt");
             PathNode node = heap.buildCompleteTree(0, 0);
             System.out.println("Node retrieved is: " + (node.getPath().size()-1));
+
+            // TESTING ISLEVELEND
+            System.out.println("Testing setLevelEnd");
+            PathNode rootLevel = node.getParent().getParent().getParent();
+            heap.setLevelEnd(rootLevel);
+            System.out.println(rootLevel.getisLevelEnd());
+            System.out.println(rootLevel.getLeft().getisLevelEnd());
+            System.out.println(rootLevel.getLeft().getLeft().getisLevelEnd());
+            System.out.println("ending setLevelEnd");
 
             // TESTING TREE. Works!
             PathNode node_parent = node.getParent();

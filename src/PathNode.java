@@ -100,6 +100,22 @@ public class PathNode implements Comparable<PathNode> {
 
     /**
      * 
+     * @return
+     */
+    public void setisLevelEnd(Boolean bool){
+        this.isLevelEnd = bool;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public boolean getisLevelEnd(){
+        return this.isLevelEnd;
+    }
+
+    /**
+     * 
      */
     public String toString() {
         return "" + (path.size()-1) + "(" + path + ")";
