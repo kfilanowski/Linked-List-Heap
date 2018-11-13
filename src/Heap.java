@@ -93,12 +93,10 @@ public class Heap {
      * @param root Root of the subtree.
      */
     private void setLevelEnd(PathNode root) {
-        boolean setLevel = true;
-        root.setisLevelEnd(setLevel);
-        // goes until the the left subtree is empty
+        root.setisLevelEnd(true);
+        // Goes until the the left subtree is empty
         if(root.getLeft() != null){
-            PathNode nextRoot = root.getLeft();//left child
-            setLevelEnd(nextRoot);
+            setLevelEnd(root.getLeft());
         }
     }
     
