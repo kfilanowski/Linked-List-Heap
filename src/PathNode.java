@@ -116,6 +116,21 @@ public class PathNode implements Comparable<PathNode> {
 
     /**
      * 
+     * @return
+     */
+    public PathNode getGeneration(){
+        return this.generation;
+    }
+
+    /**
+     *
+     */
+    public void setGeneration(PathNode generation){
+        this.generation = generation;
+    }
+
+    /**
+     * 
      */
     public String toString() {
         return "" + (path.size()-1) + "(" + path + ")";

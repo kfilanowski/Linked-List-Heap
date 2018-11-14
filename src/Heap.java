@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 import java.io.FileNotFoundException;
 import java.io.File;
 import java.util.Scanner;
@@ -109,18 +110,39 @@ public class Heap {
      * cousins)
      * @param root Root of the subtree.
      */
-    // setGenerationLinks(PathNode root) {
-    	
-    // }
+    private void setGenerationLinks(PathNode root) {
+        // sibling link
+        if(root.getLeft() != null && root.getRight() != null){
+            root.getLeft().setGeneration(root.getRight());
+
+            // gets the cousin link 
+            if(root.getGeneration() != null && root.getGeneration().getLeft() != null){
+                root.getRight().setGeneration(root.getGeneration().getLeft());
+            }else{
+                setGenerationLinks(root.getLeft());
+            }
+            
+            // sets the generations from left to right
+            setGenerationLinks(root.getLeft());
+            setGenerationLinks(root.getRight());
+        }
+    }
+
+    /**
+     *
+     */
+   // private PathNode heapify(PathNode root){
+     //   return new PathNode();
+   // }
     
     /**
      * Prints the path lengths from left-to-right at each level in the tree in the form specified
      * by the instructions.
      * @param root Root of the whole tree to begin printing from.
      */
-    // printTreeLevels(PathNode root) {
+    private void printTreeLevels(PathNode root) {
     	
-    // }
+    }
 
     /**
      * Just a way to test Heap. DELETE THIS WHEN FINISHED.
@@ -132,16 +154,36 @@ public class Heap {
             heap.readPaths("input.txt");
             PathNode node = heap.buildCompleteTree(0, 0);
             System.out.println("Node retrieved is: " + (node.getPath().size()-1));
-
+            
+            
+            // TESTING SETGENERATIONLINKS
+            System.out.println("\n\nTesting setGenerationLinks \n*********************************************");
+            PathNode root_node = node.getParent().getParent().getParent();
+            PathNode root_node2 = root_node.getLeft().getLeft();
+            PathNode root_node3 = root_node.getLeft().getRight();
+            PathNode root_node4 = root_node.getRight().getLeft();
+            PathNode root_node5 = root_node2.getLeft();
+            PathNode root_node6 = root_node2.getRight();
+            PathNode root_nullcheck = root_node4.getLeft();
+            heap.setGenerationLinks(root_node);
+            System.out.println("node \t" + root_node.getLeft().getGeneration());
+            System.out.println("node2 \t" + root_node2.getGeneration());
+            System.out.println("node3 \t" + root_node3.getGeneration());
+            System.out.println("node4 \t" + root_node4.getGeneration());
+            System.out.println("node5 \t" + root_node5.getGeneration());
+            System.out.println("node6 \t" + root_node6.getGeneration());
+            //System.out.println("node7 \t" + root_nullcheck.getGeneration());
+            System.out.println("*********************************************\nEnding setGenerationLinks");
+                
             // TESTING ISLEVELEND
-            System.out.println("Testing setLevelEnd");
+            System.out.println("\n\nTesting setLevelEnd \n****************************************");
             PathNode rootLevel = node.getParent().getParent().getParent();
             heap.setLevelEnd(rootLevel);
             System.out.println(rootLevel.getisLevelEnd());
             System.out.println(rootLevel.getLeft().getisLevelEnd());
             System.out.println(rootLevel.getLeft().getLeft().getisLevelEnd());
             System.out.println(rootLevel.getLeft().getLeft().getLeft().getisLevelEnd());
-            System.out.println("ending setLevelEnd");
+            System.out.println("*****************************************\nEnding setLevelEnd\n\n");
 
             // TESTING TREE. Works!
             PathNode node_parent = node.getParent();
