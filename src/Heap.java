@@ -19,7 +19,6 @@ public class Heap {
         tempPath = new ArrayList<PathNode>();
     }
 
-
     /**
      * Reads inputFile given at the command line and places the contents of each line into the
      * path field found in each PathNode object. The order is the same as found in the text file.
@@ -58,8 +57,8 @@ public class Heap {
      * located at tempPath[index] is found at tempPath[2 * index] and the right child is found at
      * tempPath[(2 * index) + 1].
      *
-     * @param index     Index of the current node in tempPath.
-     * @param parent    Parent of the current node.
+     * @param index  Index of the current node in tempPath.
+     * @param parent Parent of the current node.
      * @return A reference to the last node placed in the tree.
      */
     private PathNode buildCompleteTree(int index, int parent) {
@@ -80,13 +79,13 @@ public class Heap {
 
         // Base case, Returns the very last node inserted in this graph.
         if (index + 1 >= tempPath.size()) {
+            current.setIsLastNode(true);
             return current;
         }
 
         // Recursive call to continue building the binary tree.
         return buildCompleteTree(index+1, parent);
     }
-    
 
     /**
      * Recursive method that sets isLevelEnd.
@@ -94,19 +93,11 @@ public class Heap {
      * @param root Root of the subtree.
      */
     private void setLevelEnd(PathNode root) {
-        root.setisLevelEnd(true);
+        root.setIsLevelEnd(true);
         // Goes until the the left subtree is empty
         if(root.getLeft() != null){
             setLevelEnd(root.getLeft());
         }
-    }
-    
-
-    /**
-     * Recursive method that sets the last node's isLastNode property to true.
-     */
-    private void setLastNode() {
-
     }
 
     /**
@@ -139,14 +130,17 @@ public class Heap {
             PathNode node = heap.buildCompleteTree(0, 0);
             System.out.println("Node retrieved is: " + (node.getPath().size()-1));
 
+            // TESTING get Last Node
+            System.out.println("is the node we retrieved the last node? " + node.getIsLastNode());
+
             // TESTING ISLEVELEND
             System.out.println("Testing setLevelEnd");
             PathNode rootLevel = node.getParent().getParent().getParent();
             heap.setLevelEnd(rootLevel);
-            System.out.println(rootLevel.getisLevelEnd());
-            System.out.println(rootLevel.getLeft().getisLevelEnd());
-            System.out.println(rootLevel.getLeft().getLeft().getisLevelEnd());
-            System.out.println(rootLevel.getLeft().getLeft().getLeft().getisLevelEnd());
+            System.out.println(rootLevel.getIsLevelEnd());
+            System.out.println(rootLevel.getLeft().getIsLevelEnd());
+            System.out.println(rootLevel.getLeft().getLeft().getIsLevelEnd());
+            System.out.println(rootLevel.getLeft().getLeft().getLeft().getIsLevelEnd());
             System.out.println("ending setLevelEnd");
 
             // TESTING TREE. Works!

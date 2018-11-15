@@ -31,20 +31,6 @@ public class PathNode implements Comparable<PathNode> {
     
     /**
      * 
-     */
-	@Override
-	public int compareTo(PathNode o) {
-        int value = 0;
-        if(this.path.size()-1 < o.path.size()-1){
-            value = -1;
-        }else if(this.path.size()-1 > o.path.size()-1){
-            value = 1;
-        }
-		return value;
-    }
-    
-    /**
-     * 
      * @return
      */
     public ArrayList<Integer> getPath() {
@@ -58,6 +44,14 @@ public class PathNode implements Comparable<PathNode> {
     public void setLeft(PathNode left) {
         this.left = left;
     }
+
+    /**
+     * 
+     * @return
+     */
+    public PathNode getLeft() {
+        return left;
+    }
     
     /**
      * 
@@ -65,6 +59,14 @@ public class PathNode implements Comparable<PathNode> {
      */
     public void setRight(PathNode right) {
         this.right = right;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public PathNode getRight() {
+        return right;
     }
 
     /**
@@ -79,31 +81,31 @@ public class PathNode implements Comparable<PathNode> {
      * 
      * @return
      */
-    public PathNode getLeft() {
-        return left;
-    }
-
-    /**
-     * 
-     * @return
-     */
-    public PathNode getRight() {
-        return right;
-    }
-
-    /**
-     * 
-     * @return
-     */
     public PathNode getParent() {
         return parent;
     }
 
     /**
      * 
+     * @param node
+     */
+    public void setGeneration(PathNode node) {
+        generation = node;
+    }
+
+    /**
+     * 
+     * @param bool
+     */
+    public PathNode getGeneration() {
+        return generation;
+    }
+
+    /**
+     * 
      * @return
      */
-    public void setisLevelEnd(Boolean bool){
+    public void setIsLevelEnd(Boolean bool) {
         this.isLevelEnd = bool;
     }
 
@@ -111,8 +113,39 @@ public class PathNode implements Comparable<PathNode> {
      * 
      * @return
      */
-    public boolean getisLevelEnd(){
+    public boolean getIsLevelEnd() {
         return this.isLevelEnd;
+    }
+
+    /**
+     * 
+     * @param bool
+     */
+    public void setIsLastNode(boolean bool) {
+        isLastNode = bool;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public boolean getIsLastNode() {
+        return isLastNode;
+    }
+
+
+    /**
+    * 
+    */
+    @Override
+    public int compareTo(PathNode o) {
+        int value = 0;
+        if (this.path.size() - 1 < o.path.size() - 1) {
+            value = -1;
+        } else if (this.path.size() - 1 > o.path.size() - 1) {
+            value = 1;
+        }
+        return value;
     }
 
     /**
