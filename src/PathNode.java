@@ -119,7 +119,21 @@ public class PathNode implements Comparable<PathNode> {
 
     /**
      * 
-     * @param bool
+     * @return
+     */
+    public PathNode getGeneration(){
+        return this.generation;
+    }
+
+    /**
+     *
+     */
+    public void setGeneration(PathNode generation){
+        this.generation = generation;
+    }
+
+    /**
+     * 
      */
     public void setIsLastNode(boolean bool) {
         isLastNode = bool;
