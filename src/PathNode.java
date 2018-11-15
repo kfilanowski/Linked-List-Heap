@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 
@@ -119,21 +120,6 @@ public class PathNode implements Comparable<PathNode> {
 
     /**
      * 
-     * @return
-     */
-    public PathNode getGeneration(){
-        return this.generation;
-    }
-
-    /**
-     *
-     */
-    public void setGeneration(PathNode generation){
-        this.generation = generation;
-    }
-
-    /**
-     * 
      */
     public void setIsLastNode(boolean bool) {
         isLastNode = bool;
@@ -163,9 +149,12 @@ public class PathNode implements Comparable<PathNode> {
     }
 
     /**
-     * 
+     * Returns a formatted string containing the size of the path, followed
+     * by a set of parenthesis containing the path itself.
+     * @return - A formatted String containing the size of the path and the
+     * path itself.
      */
     public String toString() {
-        return "" + (path.size()-1) + "(" + path + ")";
+        return (path.size()-1) + "(" + path.toString().replaceAll("[\\[\\]]", "") + ")";
     }
 }

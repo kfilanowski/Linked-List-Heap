@@ -51,12 +51,9 @@ public class Heap {
         in.close();
     }
 
-
     /**
-     * Recursively builds a complete binary tree. Places PathNode objects in tempPath into a
-     * complete binary tree in order of appearance in the text file. The left child of a parent
-     * located at tempPath[index] is found at tempPath[2 * index] and the right child is found at
-     * tempPath[(2 * index) + 1].
+     * Recursively builds a complete binary tree. Places PathNode objects in 
+     * tempPath into a complete binary tree in order of appearance in the text file. 
      *
      * @param index  Index of the current node in tempPath.
      * @param parent Parent of the current node.
@@ -136,16 +133,43 @@ public class Heap {
      * Prints the path lengths from left-to-right at each level in the tree in the form specified
      * by the instructions.
      * @param root Root of the whole tree to begin printing from.
+     * @return A formatted string showing the the path lengths from left to
+     * right of each level in the tree.
      */
-    private void printTreeLevels(PathNode root) {
-    	
+    private String printTreeLevels(PathNode root) {
+        // String builder to append all content to.
+        StringBuilder levels = new StringBuilder();
+        // PathNode to keep track of the generations.
+        PathNode generation;
+        // To keep track of levels.
+        int i = 0;
+        // Root node.
+        levels.append(String.format("Root:%15s\n", root));
+        root = root.getLeft();
+        generation = root;
+        // While there is a level:
+        while (root != null) {
+            levels.append(String.format("Level %d: ", ++i));
+            // While there are generations:
+            while (generation != null) {
+                levels.append(" " + generation);
+                generation = generation.getGeneration();
+                if (generation != null) {
+                    levels.append("--> ");
+                }
+            }
+            levels.append("\n");
+            root = root.getLeft();
+            generation = root;
+        }
+        return levels.toString();
     }
 
     /**
      * Just a way to test Heap. DELETE THIS WHEN FINISHED.
      */
     public static void main(String[] args) {
-        System.out.println("Running Heap..");
+        System.out.println("Running Heap...");
         Heap heap = new Heap();
         try {
             heap.readPaths("input.txt");
@@ -155,8 +179,6 @@ public class Heap {
             // TESTING get Last Node
             System.out.println("is the node we retrieved the last node? " + node.getIsLastNode());
 
-            
-            
             // TESTING SETGENERATIONLINKS
             System.out.println("\n\nTesting setGenerationLinks \n*********************************************");
             PathNode root_node = node.getParent().getParent().getParent();
@@ -176,6 +198,11 @@ public class Heap {
             //System.out.println("node7 \t" + root_nullcheck.getGeneration());
             System.out.println("*********************************************\nEnding setGenerationLinks");
                 
+            // TESTING PRINTTREELEVELS
+            System.out.println("\n\nTesting printTreeLevels \n*********************************************");
+            System.out.println(heap.printTreeLevels(node.getParent().getParent().getParent()));
+            System.out.println("\n\nEnding printTreeLevels \n*********************************************");
+
             // TESTING ISLEVELEND
             System.out.println("\n\nTesting setLevelEnd \n****************************************");
             PathNode rootLevel = node.getParent().getParent().getParent();
