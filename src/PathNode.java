@@ -38,6 +38,10 @@ public class PathNode implements Comparable<PathNode> {
         return path;
     }
 
+    public int getSize() {
+        return path.size();
+    }
+
     /**
      * 
      * @param left

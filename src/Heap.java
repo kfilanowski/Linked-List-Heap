@@ -125,9 +125,44 @@ public class Heap {
     /**
      *
      */
-   // private PathNode heapify(PathNode root){
-     //   return new PathNode();
-   // }
+    private PathNode heapify(PathNode root){
+        PathNode min;
+        PathNode generation;
+        // we need to make sure left and right child are not null
+        if (root.getLeft().getSize() < root.getRight().getSize()) {
+            min = root.getLeft();
+        } else {
+            min = root.getRight();
+        }
+        if (root.getGeneration() != null) {
+            // Heapify to the rightmost sibling first
+            heapify(root.getGeneration());
+        }
+        if (root.getSize() > min.getSize()) {
+            //swap(root and min)
+        }
+
+    }
+    
+
+
+    /**
+     * Gets the parent of the left-most PathNode in the left-most subtree for
+     * starting the heapify process.
+     * @param root
+     * @return
+     */
+    private PathNode startHeapNode(PathNode root) {
+        // Goes until the the left subtree is empty
+        if (root.getLeft() != null) {
+            startHeapNode(root.getLeft());
+        }
+        return root.getParent();
+    }
+
+    private PathNode startHeapify(PathNode root) {
+        return heapify(startHeapNode(root));
+    }
     
     /**
      * Prints the path lengths from left-to-right at each level in the tree in the form specified
