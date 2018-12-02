@@ -123,28 +123,79 @@ public class Heap {
     }
 
     /**
+     * 
+     */
+    private void swap(PathNode one, PathNode two) {
+        ArrayList<Integer> temp = one.getPath();
+        one.path = two.path;
+        two.path = temp;
+    }
+
+    /**
      *
      */
-    private PathNode heapify(PathNode root){
-        PathNode min;
-        PathNode generation;
-        // we need to make sure left and right child are not null
-        if (root.getLeft().getSize() < root.getRight().getSize()) {
-            min = root.getLeft();
-        } else {
-            min = root.getRight();
+    private PathNode heapify(PathNode root) {
+        PathNode min = null;
+        boolean swapped = false;
+        System.out.println("root is: " + root);
+        // we need to make sure children are not null
+        if (root.getLeft() != null) {
+            if (root.getRight() != null) {
+                if (root.getLeft().getSize() <= root.getRight().getSize()) {
+                    min = root.getLeft();
+                } else if (root.getLeft().getSize() > root.getRight().getSize()) {
+                    min = root.getRight();
+                }
+            } else {
+                min = root.getLeft();
+            }
         }
+        
+        System.out.println("min is: " + min);
+       
         if (root.getGeneration() != null) {
+            System.out.println("\nnext generation");
             // Heapify to the rightmost sibling first
             heapify(root.getGeneration());
         }
-        if (root.getSize() > min.getSize()) {
-            //swap(root and min)
+        if (min != null && root.getSize() > min.getSize()) {
+            swap(root,min);
+            System.out.println("swapped root and min" + root + "  " + min);
+            swapped = true;
+            setGenerationLinks(min);
+            if (root.getLeft() != null) {
+                // should be root, but its min since we didnt swap links
+                heapify(min);
+            }
         }
 
-    }
-    
+        //WHY IS THIS HERE AGAIN?
+        // base case
+        if (swapped && min.getParent() == null) {
+            return min;
+        } else if (!swapped && root.getParent() == null) {
+            return root;
+        }
 
+        if (swapped && min.getIsLevelEnd()) {
+            // should be min if we swapped links and set level end properly
+            System.out.println("\ngoing to root's parent");
+            if (root.getParent() != null) {
+                heapify(root.getParent());
+            } else {
+                System.out.println("Final root returned is: " + root);
+                System.out.println("left child: " + root.getLeft());
+                System.out.println("right child: " + root.getRight());
+                return root;
+            }
+        } else if (!swapped && root.getIsLevelEnd()) {
+            // should be root if we swapped links and set level end properly
+            System.out.println("\ngoing to mins's parent");
+            //if (min.getParent() != null)
+                heapify(root.getParent());
+        }
+        return root;
+    }   
 
     /**
      * Gets the parent of the left-most PathNode in the left-most subtree for
@@ -209,6 +260,14 @@ public class Heap {
         try {
             heap.readPaths("input.txt");
             PathNode node = heap.buildCompleteTree(0, 0);
+            PathNode root_node = node.getParent().getParent().getParent();
+            heap.setGenerationLinks(root_node);
+            heap.setLevelEnd(root_node);
+            PathNode root = heap.heapify(root_node.getLeft().getLeft());
+            System.out.println(heap.printTreeLevels(root.getParent().getParent()));
+            
+
+            /*
             System.out.println("Node retrieved is: " + (node.getPath().size()-1));
 
             // TESTING get Last Node
@@ -271,8 +330,10 @@ public class Heap {
             System.out.println(root_right_2);
             System.out.println(root_right_2_parent);
             System.out.println(root_right_2_parent_left);
+            */
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
+        
     }
 }

@@ -6,7 +6,7 @@ import java.util.Arrays;
  */
 public class PathNode implements Comparable<PathNode> {
     /** An ArrayList of vertex IDs ordered by appearance in the path. */
-    private ArrayList<Integer> path;
+    public ArrayList<Integer> path;
     /** Reference to the left child. */
     private PathNode left;
     /** Reference to the right child. */
