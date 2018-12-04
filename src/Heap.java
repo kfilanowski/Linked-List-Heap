@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Scanner;
 
 /**
- * // TODO
+ * // TODO pls 
  * @author Kevin Filanowski
  * @author Jake Guinn
  */
@@ -199,10 +199,13 @@ public class Heap {
      * @param root: The node we start the Min Heap on
      */
     private PathNode heapify(PathNode root) {
+        // Holds the smallest PathNode of a parent.
         PathNode min = null;
+        // Boolean flag to determine if a swap occured.
         boolean swapped = false;
-        System.out.println("root is: " + root);
-        // we need to make sure children are not null
+
+        System.out.println("root is: " + root); // DEBUGGING. REMOVE AT FINAL PRODUCT. //
+        // We need to make sure children are not null to compare them.
         if (root.getLeft() != null) {
             if (root.getRight() != null) {
                 if (root.getLeft().getSize() <= root.getRight().getSize()) {
@@ -214,14 +217,15 @@ public class Heap {
                 min = root.getLeft();
             }
         }
-        
-        System.out.println("min is: " + min);
+        System.out.println("min is: " + min); // DEBUGGING. REMOVE AT FINAL PRODUCT. //
        
-        if (root.getGeneration() != null) {
-            System.out.println("\n next generation");
-            // Heapify to the rightmost sibling first
+        // Heapify the rightmost siblings first.
+        if (root.getGeneration() != null && root.getGeneration().getLeft() != null) {
+            System.out.println("\n next generation"); // DEBUGGING. REMOVE AT FINAL PRODUCT. //
             heapify(root.getGeneration());
         }
+        
+        // Swap PathNodes if child is smaller than parent node.
         if (min != null && root.getSize() > min.getSize()) {
             swap(root,min);
             swapped = true;
