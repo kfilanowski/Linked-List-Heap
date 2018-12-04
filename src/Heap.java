@@ -123,7 +123,9 @@ public class Heap {
     }
 
     /**
-     * 
+     * Swaps the data for now 
+     * @param one: the root of the tree/subtree we are at
+     * @param two: the min child of the parent 
      */
     private void swap(PathNode one, PathNode two) {
         ArrayList<Integer> temp = one.getPath();
@@ -133,7 +135,9 @@ public class Heap {
 
 
     /**
-     *
+     *Performs a min Heap with the smallest PathNode being at the top and every child
+     *of every node is less than the parent of the child.
+     * @param root: The node we start the Min Heap on
      */
     private PathNode heapify(PathNode root) {
         PathNode min = null;
@@ -171,10 +175,11 @@ public class Heap {
         }
 
         //WHY IS THIS HERE AGAIN?
-        // base case
+        // base case 
+        //This is here so we dont get null pointer for the top of the heap
         if (swapped && min.getParent() == null) {
             return min;
-        } else if (!swapped && root.getParent() == null) {
+        }else if (!swapped && root.getParent() == null) {
             return root;
         }
 
@@ -196,6 +201,7 @@ public class Heap {
                 heapify(root.getParent());
         }
         return root;
+        
     }   
 
     /**
