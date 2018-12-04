@@ -2,7 +2,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * TODO pls
  * 
+ * @author Kevin Filanowski
+ * @author Jake Guinn
  */
 public class PathNode implements Comparable<PathNode> {
     /** An ArrayList of vertex IDs ordered by appearance in the path. */

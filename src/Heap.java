@@ -348,25 +348,22 @@ public class Heap {
 
     /**
      * TODO
+     * @param filename - The name of the file to read and build a graph from.
      */
-    public void go() {
-        try {
-            // Read input.
-            readPaths("input.txt");
-            // Build tree.
-            PathNode rootPathNode = buildCompleteTree(0, 0);
-            setGenerationLinks(rootPathNode);
+    public void go(String filename) throws FileNotFoundException {
+        // Read input.
+        readPaths(filename);
+        // Build tree.
+        PathNode rootPathNode = buildCompleteTree(0, 0);
+        setGenerationLinks(rootPathNode);
 
-            System.out.println("---------- Before Heapify ----------");
-            System.out.println(printTreeLevels(rootPathNode));
+        System.out.println("---------- Before Heapify ----------");
+        System.out.println(printTreeLevels(rootPathNode));
 
-            // Heapify
-            rootPathNode = startHeapify(rootPathNode);
-            
-            System.out.println("---------- After Heapify ----------");
-            System.out.println(printTreeLevels(rootPathNode));
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        }
+        // Heapify
+        rootPathNode = startHeapify(rootPathNode);
+        
+        System.out.println("---------- After Heapify ----------");
+        System.out.println(printTreeLevels(rootPathNode));
     }
 }
