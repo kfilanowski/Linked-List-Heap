@@ -4,9 +4,11 @@ import java.io.File;
 import java.util.Scanner;
 
 /**
- * // TODO pls 
+ * the Heap class where we will build the tree, set all appopriate links and 
+ * values to each PathNode in the tree, and Perform a min Heap on the complete tree.
  * @author Kevin Filanowski
- * @author Jake Guinn
+ * @author Jake Ginn
+ * @version 12/4/2018
  */
 public class Heap {
 	/** Temporary storage for the path nodes */
@@ -53,7 +55,6 @@ public class Heap {
     /**
      * Recursively builds a complete binary tree. Places PathNode objects in 
      * tempPath into a complete binary tree in order of appearance in the text file. 
-     *
      * @param index - Index of the current node in tempPath.
      * @param parent - Parent of the current node.
      * @return - A reference to the last node placed in the tree.
@@ -228,7 +229,9 @@ public class Heap {
 
     /**
      * Performs a minimum Heap with the smallest PathNode being at the top and
-     * every child of every node is less than the parent of the child.
+     * every child of every node is less than the parent of the child. On the 
+     * case that the children are equal it will always choose the left child to 
+     * swap with.
      * It is *highly recommended* that the method startHeapify is used instead,
      * as it takes care of all requirements in order for heapify to run properly.
      * These requirements include:
@@ -249,7 +252,7 @@ public class Heap {
         if (root.getLeft() != null) {
             min = root.getLeft();
             if (root.getRight() != null) {
-                if (min.getSize() > root.getRight().getSize()) {
+                if (min.compareTo(root.getRight()) > 0) {
                     min = root.getRight();
                 }
             }
@@ -347,7 +350,9 @@ public class Heap {
     }
 
     /**
-     * TODO
+     * Reads the input from the file into a complete binary tree, performs all
+     * necessary functions, and prints the tree before Heapify and after Heapify
+     * has been performed.
      * @param filename - The name of the file to read and build a graph from.
      */
     public void go(String filename) throws FileNotFoundException {
