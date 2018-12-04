@@ -27,7 +27,7 @@ public class Heap {
      * @param inputFile Name of the input file to be read.
      * @throws FileNotFoundException if the input file cannot be found.
      */
-    public void readPaths(String inputFile) throws FileNotFoundException {
+    private void readPaths(String inputFile) throws FileNotFoundException {
         // The input file.
         File readFile = new File(inputFile);
         // Scans the input file.
@@ -78,7 +78,7 @@ public class Heap {
         // Base case, Returns the very last node inserted in this graph.
         if (index + 1 >= tempPath.size()) {
             current.setIsLastNode(true);
-            return current;
+            return getHighestRoot(current);
         }
 
         // Recursive call to continue building the binary tree.
@@ -96,6 +96,19 @@ public class Heap {
         if(root.getLeft() != null){
             setLevelEnd(root.getLeft());
         }
+    }
+
+    /**
+     * Gets the highest root of the entire tree using any node currently in the
+     * tree as input.
+     * @param node - Any node in the tree.
+     * @return - The root of the entire tree.
+     */
+    private PathNode getHighestRoot(PathNode node) {
+        while (node.getParent() != null) {
+            node = node.getParent();
+        }
+        return node;
     }
 
     /**
@@ -198,21 +211,20 @@ public class Heap {
     }   
 
     /**
-     * Gets the parent of the left-most PathNode in the left-most subtree for
-     * starting the heapify process.
+     * 
      * @param root
-     * @return
      */
-    private PathNode startHeapNode(PathNode root) {
-        // Goes until the the left subtree is empty
-        if (root.getLeft() != null) {
-            startHeapNode(root.getLeft());
+    private void startHeapify(PathNode root) {
+        setGenerationLinks(root);
+        setLevelEnd(root);
+        // Gets the parent of the left-most PathNode in the left-most
+        // subtree for starting the heapify process.
+        while (root.getLeft() != null) {
+            root = root.getLeft();
         }
-        return root.getParent();
-    }
-
-    private PathNode startHeapify(PathNode root) {
-        return heapify(startHeapNode(root));
+        // Go to the parent. This is our starting node for heapify.
+        root = root.getParent();
+        heapify(root);
     }
     
     /**
@@ -255,85 +267,28 @@ public class Heap {
      * Just a way to test Heap. DELETE THIS WHEN FINISHED.
      */
     public static void main(String[] args) {
-        System.out.println("Running Heap...");
+        System.out.println("Running Heap... :D");
         Heap heap = new Heap();
         try {
             heap.readPaths("input.txt");
-            PathNode node = heap.buildCompleteTree(0, 0);
-            PathNode root_node = node.getParent().getParent().getParent();
+            PathNode root_node = heap.buildCompleteTree(0, 0);
             heap.setGenerationLinks(root_node);
             heap.setLevelEnd(root_node);
-            PathNode root = heap.heapify(root_node.getLeft().getLeft());
-            System.out.println(heap.printTreeLevels(root.getParent().getParent()));
-            
 
-            /*
-            System.out.println("Node retrieved is: " + (node.getPath().size()-1));
-
-            // TESTING get Last Node
-            System.out.println("is the node we retrieved the last node? " + node.getIsLastNode());
-
-            // TESTING SETGENERATIONLINKS
-            System.out.println("\n\nTesting setGenerationLinks \n*********************************************");
-            PathNode root_node = node.getParent().getParent().getParent();
-            PathNode root_node2 = root_node.getLeft().getLeft();
-            PathNode root_node3 = root_node.getLeft().getRight();
-            PathNode root_node4 = root_node.getRight().getLeft();
-            PathNode root_node5 = root_node2.getLeft();
-            PathNode root_node6 = root_node2.getRight();
-            PathNode root_nullcheck = root_node4.getLeft();
-            heap.setGenerationLinks(root_node);
-            System.out.println("node \t" + root_node.getLeft().getGeneration());
-            System.out.println("node2 \t" + root_node2.getGeneration());
-            System.out.println("node3 \t" + root_node3.getGeneration());
-            System.out.println("node4 \t" + root_node4.getGeneration());
-            System.out.println("node5 \t" + root_node5.getGeneration());
-            System.out.println("node6 \t" + root_node6.getGeneration());
-            //System.out.println("node7 \t" + root_nullcheck.getGeneration());
-            System.out.println("*********************************************\nEnding setGenerationLinks");
-                
             // TESTING PRINTTREELEVELS
             System.out.println("\n\nTesting printTreeLevels \n*********************************************");
-            System.out.println(heap.printTreeLevels(node.getParent().getParent().getParent()));
-            System.out.println("\n\nEnding printTreeLevels \n*********************************************");
+            System.out.println(heap.printTreeLevels(root_node));
+            System.out.println("Ending printTreeLevels \n*********************************************");
+            
+            // TESTING HEAPIFY
+            heap.startHeapify(root_node);
 
-            // TESTING ISLEVELEND
-            System.out.println("\n\nTesting setLevelEnd \n****************************************");
-            PathNode rootLevel = node.getParent().getParent().getParent();
-            heap.setLevelEnd(rootLevel);
-            System.out.println(rootLevel.getIsLevelEnd());
-            System.out.println(rootLevel.getLeft().getIsLevelEnd());
-            System.out.println(rootLevel.getLeft().getLeft().getIsLevelEnd());
-            System.out.println(rootLevel.getLeft().getLeft().getLeft().getIsLevelEnd());
-            System.out.println("*****************************************\nEnding setLevelEnd\n\n");
-
-            // TESTING TREE. Works!
-            PathNode node_parent = node.getParent();
-            PathNode node_grandparent = node_parent.getParent();
-            PathNode node_root = node_grandparent.getParent();
-            PathNode root_left = node_root.getLeft();
-            PathNode root_left_2 = root_left.getLeft();
-            PathNode root_left_3 = root_left_2.getLeft();
-            PathNode root_left_2_right = root_left_2.getRight();
-            PathNode root_right = node_root.getRight();
-            PathNode root_right_2 = root_right.getRight();
-            PathNode root_right_2_parent = root_right_2.getParent();
-            PathNode root_right_2_parent_left = root_right_2_parent.getLeft();
-            System.out.println(node_parent);
-            System.out.println(node_grandparent);
-            System.out.println(node_root);
-            System.out.println(root_left);
-            System.out.println(root_left_2);
-            System.out.println(root_left_3);
-            System.out.println(root_left_2_right);
-            System.out.println(root_right);
-            System.out.println(root_right_2);
-            System.out.println(root_right_2_parent);
-            System.out.println(root_right_2_parent_left);
-            */
+            // TESTING PRINTTREELEVELS
+            System.out.println("\n\nTesting printTreeLevels HEAPIFIED \n*********************************************");
+            System.out.println(heap.printTreeLevels(root_node));
+            System.out.println("Ending printTreeLevels HEAPIFIED\n*********************************************");
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
-        
     }
 }
