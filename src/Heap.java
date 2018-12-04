@@ -144,13 +144,22 @@ public class Heap {
      * @param two: the min child of the parent 
      */
     private void swap(PathNode root, PathNode child) {
-        // Swapping isLastNode
+        System.out.println("/////////// PERFORMING A SWAP ON " + root + " AND " + child + " ///////////");
+
+        // Temporary node to reference an extra Pathnode.
+        PathNode tempChild;
+        // Swapping isLastNode if needed.
         if (child.getIsLastNode()) {
             child.setIsLastNode(false);
             root.setIsLastNode(true);
         }
-
-        PathNode tempChild;
+        // Swap Generation links.
+        tempChild = root.getGeneration();
+        root.setGeneration(child.getGeneration());
+        child.setGeneration(tempChild);
+        if (root.getParent() != null && root.getParent().getLeft() != root) {
+            root.getParent().getLeft().setGeneration(child);
+        }
 
         // Swapping links
         if (root.getLeft() == child) {
@@ -207,21 +216,18 @@ public class Heap {
         System.out.println("root is: " + root); // DEBUGGING. REMOVE AT FINAL PRODUCT. //
         // We need to make sure children are not null to compare them.
         if (root.getLeft() != null) {
+            min = root.getLeft();
             if (root.getRight() != null) {
-                if (root.getLeft().getSize() <= root.getRight().getSize()) {
-                    min = root.getLeft();
-                } else if (root.getLeft().getSize() > root.getRight().getSize()) {
+                if (min.getSize() > root.getRight().getSize()) {
                     min = root.getRight();
                 }
-            } else {
-                min = root.getLeft();
             }
         }
         System.out.println("min is: " + min); // DEBUGGING. REMOVE AT FINAL PRODUCT. //
        
         // Heapify the rightmost siblings first.
         if (root.getGeneration() != null && root.getGeneration().getLeft() != null) {
-            System.out.println("\n next generation"); // DEBUGGING. REMOVE AT FINAL PRODUCT. //
+            System.out.println("\n ---> Next generation"); // DEBUGGING. REMOVE AT FINAL PRODUCT. //
             heapify(root.getGeneration());
         }
         
@@ -229,31 +235,32 @@ public class Heap {
         if (min != null && root.getSize() > min.getSize()) {
             swap(root,min);
             swapped = true;
-            setGenerationLinks(getHighestRoot(min));
-            System.out.println("swapped root and min: " + root + "  " + min);
-            //System.out.println(printTreeLevels(min));
+
+            System.out.println(" // START DEBUGGING INFORMATION. //"); 
             System.out.println(printTreeLevels(getHighestRoot(min)));
             System.out.println("root's new parent: " + root.getParent());
             System.out.println("root's left and right child: " + root.getLeft() + " , " + root.getRight());
-            System.out.println("roots generation: " + root.getGeneration());
-
+            System.out.println("root's new generation is: " + root.getGeneration());
             System.out.println("Child's new parent: " + min.getParent());
             System.out.println("Childs's left and right child: " + min.getLeft() + " , " + min.getRight());
-            System.out.println("Child's generation: " + min.getGeneration());
+            System.out.println("Child's new generation is: " + min.getGeneration());
+            System.out.println(" // END DEBUGGING INFORMATION. //");
+
+            // Bubble down the heapify.
             if (root.getLeft() != null) {
                 heapify(root);
             }
         }
 
-        // base case 
-        // This is here so we dont get null pointer for the top of the heap
-        if (swapped && min.getParent() == null) {
-            System.out.println("first base case reached");
-            return min;
-        }else if (!swapped && root.getParent() == null) {
-            System.out.println("second base case reached");
-            return root;
-        }
+        // // base case 
+        // // This is here so we dont get null pointer for the top of the heap
+        // if (swapped && min.getParent() == null) {
+        //     System.out.println("FIRST BASE CASE REACHED");
+        //     //return min;
+        // }else if (!swapped && root.getParent() == null) {
+        //     System.out.println("SECOND BASE CASE REACHED");
+        //     //return root;
+        // }
 
         if (swapped && min.getIsLevelEnd()) {
             // should be min if we swapped links and set level end properly
@@ -268,9 +275,10 @@ public class Heap {
             }
         } else if (!swapped && root.getIsLevelEnd()) {
             // should be root if we swapped links and set level end properly
-            System.out.println("\ngoing to mins's parent");
-            if (root.getParent() != null)
+            if (root.getParent() != null) {
+                System.out.println("\ngoing to mins's parent");
                 heapify(root.getParent());
+            }
         }
         return root;
     }   
