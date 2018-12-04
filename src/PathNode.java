@@ -2,8 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * TODO pls
- * 
+ * The pathNodes that are used to build a complete binary tree for Heapify
  * @author Kevin Filanowski
  * @author Jake Guinn
  */
@@ -24,8 +23,9 @@ public class PathNode implements Comparable<PathNode> {
     private boolean isLastNode;
 
     /**
-     * 
-     * @param path
+     * Constructor for PathNode that will initialize the path and set both
+     * the isLevelEnd and isLastNode to false.
+     * @param path - The data inside the PathNode
      */
     public PathNode(ArrayList<Integer> path) {
         this.path = path;
@@ -34,107 +34,115 @@ public class PathNode implements Comparable<PathNode> {
     }
     
     /**
-     * 
-     * @return
+     * Gets the data That the PathNode holds
+     * @return path - the data inside the PathNode
      */
     public ArrayList<Integer> getPath() {
         return path;
     }
-
+    
+    /**
+     * Gets the size of the path in the PathNode
+     * @return size - the size of the path
+     */
     public int getSize() {
         return path.size();
     }
 
     /**
-     * 
-     * @param left
+     * Sets the left Child of the PathNode
+     * @param left - the PathNode that will become the left child of the current PathNode
      */
     public void setLeft(PathNode left) {
         this.left = left;
     }
 
     /**
-     * 
-     * @return
+     * Gets the left child of the current PathNode
+     * @return left - the left child of the current PathNode
      */
     public PathNode getLeft() {
         return left;
     }
     
     /**
-     * 
-     * @param right
+     * Sets the right Child of the current PathNode
+     * @param right- the PathNode that will become the right child of the current PathNode
      */
     public void setRight(PathNode right) {
         this.right = right;
     }
 
     /**
-     * 
-     * @return
+     * Gets the right child of the current PathNode
+     * @return right - the right child of the current PathNode
      */
     public PathNode getRight() {
         return right;
     }
 
     /**
-     * 
-     * @param parent
+     * Sets the parent of the current PathNode
+     * @param parent - the PathNode that will become the parent of the current PathNode
      */
     public void setParent(PathNode parent) {
         this.parent = parent;
     }
 
     /**
-     * 
-     * @return
+     * Gets the parent of the current PathNode
+     * @return parent- the parent of the current PathNode
      */
     public PathNode getParent() {
         return parent;
     }
 
     /**
-     * 
-     * @param node
+     * Sets the generation link between the current PathNode and its sibling or cousin
+     * @param node - the sibling or cousin that is being linked to the current PathNode
      */
     public void setGeneration(PathNode node) {
         generation = node;
     }
 
     /**
-     * 
-     * @param bool
+     * Gets the generation which could be a sibling or a cousin
+     * @return generation - returns that PathNode that is the next generation from the 
+     *                      current PathNode
      */
     public PathNode getGeneration() {
         return generation;
     }
 
     /**
-     * 
-     * @return
+     * Sets isLevelEnd to true or false
+     * @param bool - true or false
      */
     public void setIsLevelEnd(Boolean bool) {
         this.isLevelEnd = bool;
     }
 
     /**
-     * 
-     * @return
+     * Gets isLevelEnd; True if it is, False if it is not
+     * @return True or false
      */
     public boolean getIsLevelEnd() {
         return this.isLevelEnd;
     }
 
     /**
-     * 
+     * Sets isLevelEnd to true or false
+     * @param bool - True or False depending on if it is one of the 
+     *               very left PathNodes
      */
     public void setIsLastNode(boolean bool) {
         isLastNode = bool;
     }
 
     /**
-     * 
-     * @return
+     * Gets if the current PathNode is the last node in the tree
+     * @return isLastNode - True or False depending on if it is the 
+     *                      last node in the tree
      */
     public boolean getIsLastNode() {
         return isLastNode;
@@ -142,14 +150,16 @@ public class PathNode implements Comparable<PathNode> {
 
 
     /**
-    * 
+    * Compares the current PathNode's path size to another PathNode's path size
+    @return value - 0 if the sizes are equal, -1 if the current path is shorter,
+                    and 1 if the current path is longer than the other.
     */
     @Override
     public int compareTo(PathNode o) {
         int value = 0;
-        if (this.path.size() - 1 < o.path.size() - 1) {
+        if (this.path.size() < o.path.size() ) {
             value = -1;
-        } else if (this.path.size() - 1 > o.path.size() - 1) {
+        } else if (this.path.size() > o.path.size()) {
             value = 1;
         }
         return value;

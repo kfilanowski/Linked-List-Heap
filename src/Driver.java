@@ -1,9 +1,11 @@
 import java.io.FileNotFoundException;
 
 /**
- * TODO
+ * Creates a Heap object and calls the go function which will perform a 
+ * min heap on the file that is passed in.
  * @author Kevin Filanowski
- * @author Jake Guinn
+ * @author Jake Ginn
+ * @version 12/4/2018
  */
 public class Driver {
     /** Heap graph. */
