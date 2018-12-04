@@ -4,9 +4,10 @@ import java.io.File;
 import java.util.Scanner;
 
 /**
- * // TODO
+ * This is the heap class where we will build the tree, set all appopriate links and 
+ * values to each PathNode in the tree, and Perform a min Heap on the complete tree.
  * @author Kevin Filanowski
- * @author Jake Guinn
+ * @author Jake Ginn
  */
 public class Heap {
 	/** Temporary storage for the path nodes */
@@ -139,18 +140,27 @@ public class Heap {
     }
 
     /**
-     * Swaps the data for now 
+     * swaps the links of the child and the root node that are being swapped  
      * @param one: the root of the tree/subtree we are at
      * @param two: the min child of the parent 
      */
     private void swap(PathNode root, PathNode child) {
-        // Swapping isLastNode
+        //System.out.println("/////////// PERFORMING A SWAP ON " + root + " AND " + child + " ///////////");
+
+        // Temporary node to reference an extra Pathnode.
+        PathNode tempChild;
+        // Swapping isLastNode if needed.
         if (child.getIsLastNode()) {
             child.setIsLastNode(false);
             root.setIsLastNode(true);
         }
-
-        PathNode tempChild;
+        // // Swap Generation links.
+        // tempChild = root.getGeneration();
+        // root.setGeneration(child.getGeneration());
+        // child.setGeneration(tempChild);
+        // if (root.getParent() != null && root.getParent().getLeft() != root) {
+        //     root.getParent().getLeft().setGeneration(child);
+        // }
 
         // Swapping links
         if (root.getLeft() == child) {
@@ -160,15 +170,7 @@ public class Heap {
             root.setRight(child.getRight());
             child.setRight(tempChild);
             child.setLeft(root);
-            if (root.getParent() != null) {
-                if (root.getParent().getLeft() == root) {
-                    root.getParent().setLeft(child);
-                } else {
-                    root.getParent().setRight(child);
-                }
-            }
-            child.setParent(root.getParent());
-            root.setParent(child);
+            swapRootLinks(root, child);
         } else {
             // Swapping IsLevelEnd
             if (root.getIsLevelEnd()) {
@@ -181,16 +183,24 @@ public class Heap {
             root.setRight(child.getRight());
             child.setLeft(tempChild);
             child.setRight(root);
-            if (root.getParent() != null) {
-                if (root.getParent().getLeft() == root) {
-                    root.getParent().setLeft(child);
-                } else {
-                    root.getParent().setRight(child);
-                }
-            }
-            child.setParent(root.getParent());
-            root.setParent(child);
+            swapRootLinks(root, child);
         }
+    }
+
+    private void swapRootLinks(PathNode root, PathNode child){
+        if (root.getParent() != null) {
+            //setting the child as the left child of roots original parent
+            if (root.getParent().getLeft() == root) {
+                root.getParent().setLeft(child);
+            } else {
+                //setting the child as the right child of roots original parent
+                root.getParent().setRight(child);
+            }
+        }
+        //child's parent is roots original parent
+        child.setParent(root.getParent());
+        //child is roots parent
+        root.setParent(child);
     }
 
     /**
@@ -199,57 +209,59 @@ public class Heap {
      * @param root: The node we start the Min Heap on
      */
     private PathNode heapify(PathNode root) {
+        // Holds the smallest PathNode of a parent.
         PathNode min = null;
+        // Boolean flag to determine if a swap occured.
         boolean swapped = false;
-        System.out.println("root is: " + root);
-        // we need to make sure children are not null
+
+        //System.out.println("root is: " + root); // DEBUGGING. REMOVE AT FINAL PRODUCT. //
+        // We need to make sure children are not null to compare them.
         if (root.getLeft() != null) {
+            min = root.getLeft();
             if (root.getRight() != null) {
-                if (root.getLeft().getSize() <= root.getRight().getSize()) {
-                    min = root.getLeft();
-                } else if (root.getLeft().getSize() > root.getRight().getSize()) {
+                if (min.getSize() > root.getRight().getSize()) {
                     min = root.getRight();
                 }
-            } else {
-                min = root.getLeft();
             }
         }
-        
-        System.out.println("min is: " + min);
+        //System.out.println("min is: " + min); // DEBUGGING. REMOVE AT FINAL PRODUCT. //
        
-        if (root.getGeneration() != null) {
-            System.out.println("\n next generation");
-            // Heapify to the rightmost sibling first
+        // Heapify the rightmost siblings first.
+        if (root.getGeneration() != null && root.getGeneration().getLeft() != null) {
+            //System.out.println("\n ---> Next generation"); // DEBUGGING. REMOVE AT FINAL PRODUCT. //
             heapify(root.getGeneration());
         }
+        
+        // Swap PathNodes if child is smaller than parent node.
         if (min != null && root.getSize() > min.getSize()) {
             swap(root,min);
             swapped = true;
-            setGenerationLinks(getHighestRoot(min));
-            System.out.println("swapped root and min: " + root + "  " + min);
-            //System.out.println(printTreeLevels(min));
-            System.out.println(printTreeLevels(getHighestRoot(min)));
-            System.out.println("root's new parent: " + root.getParent());
-            System.out.println("root's left and right child: " + root.getLeft() + " , " + root.getRight());
-            System.out.println("roots generation: " + root.getGeneration());
 
-            System.out.println("Child's new parent: " + min.getParent());
-            System.out.println("Childs's left and right child: " + min.getLeft() + " , " + min.getRight());
-            System.out.println("Child's generation: " + min.getGeneration());
+            // System.out.println(" // START DEBUGGING INFORMATION. //"); 
+            // System.out.println(printTreeLevels(getHighestRoot(min)));
+            // System.out.println("root's new parent: " + root.getParent());
+            // System.out.println("root's left and right child: " + root.getLeft() + " , " + root.getRight());
+            // System.out.println("root's new generation is: " + root.getGeneration());
+            // System.out.println("Child's new parent: " + min.getParent());
+            // System.out.println("Childs's left and right child: " + min.getLeft() + " , " + min.getRight());
+            // System.out.println("Child's new generation is: " + min.getGeneration());
+            // System.out.println(" // END DEBUGGING INFORMATION. //");
+
+            // Bubble down the heapify.
             if (root.getLeft() != null) {
                 heapify(root);
             }
         }
 
-        // base case 
-        // This is here so we dont get null pointer for the top of the heap
-        if (swapped && min.getParent() == null) {
-            System.out.println("first base case reached");
-            return min;
-        }else if (!swapped && root.getParent() == null) {
-            System.out.println("second base case reached");
-            return root;
-        }
+        // // base case 
+        // // This is here so we dont get null pointer for the top of the heap
+        // if (swapped && min.getParent() == null) {
+        //     System.out.println("FIRST BASE CASE REACHED");
+        //     //return min;
+        // }else if (!swapped && root.getParent() == null) {
+        //     System.out.println("SECOND BASE CASE REACHED");
+        //     //return root;
+        // }
 
         if (swapped && min.getIsLevelEnd()) {
             // should be min if we swapped links and set level end properly
@@ -257,16 +269,17 @@ public class Heap {
             if (min.getParent() != null) {
                 heapify(min.getParent());
             } else {
-                System.out.println("Final root returned is: " + root);
-                System.out.println("left child: " + root.getLeft());
-                System.out.println("right child: " + root.getRight());
+                // System.out.println("Final root returned is: " + root);
+                // System.out.println("left child: " + root.getLeft());
+                // System.out.println("right child: " + root.getRight());
                 return root;
             }
         } else if (!swapped && root.getIsLevelEnd()) {
             // should be root if we swapped links and set level end properly
-            System.out.println("\ngoing to mins's parent");
-            if (root.getParent() != null)
+            if (root.getParent() != null) {
+                //System.out.println("\ngoing to mins's parent");
                 heapify(root.getParent());
+            }
         }
         return root;
     }   
@@ -325,31 +338,23 @@ public class Heap {
     }
 
     /**
-     * Just a way to test Heap. DELETE THIS WHEN FINISHED.
+     * 
+     * @param args
      */
-    public static void main(String[] args) {
-        System.out.println("Running Heap... :D");
-        Heap heap = new Heap();
-        try {
-            heap.readPaths("input.txt");
-            PathNode root_node = heap.buildCompleteTree(0, 0);
-            heap.setGenerationLinks(root_node);
-            heap.setLevelEnd(root_node);
+    public void go(String filein){
+        try{
+            readPaths(filein);
+            PathNode rootNode = buildCompleteTree(0, 0);
+            setGenerationLinks(rootNode);
+            setLevelEnd(rootNode);
+            System.out.println(printTreeLevels(rootNode));
 
-            // TESTING PRINTTREELEVELS
-            System.out.println("\n\nTesting printTreeLevels \n*********************************************");
-            System.out.println(heap.printTreeLevels(root_node));
-            System.out.println("Ending printTreeLevels \n*********************************************");
-            
-            // TESTING HEAPIFY
-            root_node = heap.startHeapify(root_node);
-            heap.setGenerationLinks(root_node);
-            // TESTING PRINTTREELEVELS
-            System.out.println("\n\nTesting printTreeLevels HEAPIFIED \n*********************************************");
-            System.out.println(heap.printTreeLevels(root_node));
-            System.out.println("Ending printTreeLevels HEAPIFIED\n*********************************************");
-        } catch (FileNotFoundException ex) {
+            rootNode = heapify(rootNode);
+            setGenerationLinks(rootNode);
+            System.out.println(printTreeLevels(rootNode));
+        }catch(FileNotFoundException ex){
             System.out.println(ex.getMessage());
         }
     }
+
 }
