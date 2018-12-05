@@ -19,13 +19,19 @@ public class Driver {
         heap = new Heap();
     }
 
+    private static final void printUsageAndExit() {
+        System.out.println("Usage: java Driver <filename>");
+        System.exit(0);
+    }
+
     /**
      * Runs the go method in Heap, which performs various operations
      * such as reading in input, building a tree, heapifing it, and
      * displaying the results before and after the heapify.
      * @param filename - The name of the file to read data from.
      */
-    private void run(String filename) throws FileNotFoundException {
+    private void run(String filename) throws FileNotFoundException,
+                                             NumberFormatException {
         heap.go(filename);
     }
 
@@ -39,6 +45,10 @@ public class Driver {
             driver.run(args[0]);
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
+            printUsageAndExit();
+        } catch (NumberFormatException ex) {
+            System.out.println(ex.getMessage());
+            printUsageAndExit();
         }
     }
 }

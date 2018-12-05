@@ -27,7 +27,8 @@ public class Heap {
      * @param inputFile - Name of the input file to be read.
      * @throws FileNotFoundException - If the input file cannot be read or found.
      */
-    private void readPaths(String inputFile) throws FileNotFoundException {
+    private void readPaths(String inputFile) throws FileNotFoundException,
+                                                    NumberFormatException {
         // The input file.
         File readFile = new File(inputFile);
         // Scans the input file.
@@ -41,15 +42,22 @@ public class Heap {
         while (in.hasNextLine()) {
             path = new ArrayList<Integer>();
             line = in.nextLine().trim(); // Grabs one line from the input file.
-            // We need to extract each integer from line and place it into the arraylist path.
-            String[] arr = line.split("\\s");
-            for (String s : arr) {
-                path.add(Integer.parseInt(s));
+            if (line.length() > 0) {
+                // We need to extract each integer from line and place it into the arraylist path.
+                String[] arr = line.split("\\s+");
+                for (String s : arr) {
+                    path.add(Integer.parseInt(s));
+                }
+                // Then we need to add a new PathNode to tempPath and pass in the path arraylist.
+                tempPath.add(new PathNode(path));
             }
-            // Then we need to add a new PathNode to tempPath and pass in the path arraylist.
-            tempPath.add(new PathNode(path));
         }
         in.close();
+        // Takes care of empty input.
+        if (tempPath.size() == 0) {
+            throw new FileNotFoundException("Input file does not contain enough data.");
+        }
+        
     }
 
     /**
@@ -205,7 +213,9 @@ public class Heap {
         // Swapping links, Left
         if (root.getLeft() == child) {
             tempChild = root.getRight();
-            root.getRight().setParent(child);
+            if (root.getRight() != null) {
+                root.getRight().setParent(child);
+            }
             root.setLeft(child.getLeft());
             root.setRight(child.getRight());
             child.setRight(tempChild);
@@ -305,7 +315,9 @@ public class Heap {
             root = root.getLeft();
         }
         // Go to the parent. This is our starting PathNode for heapify.
-        root = root.getParent();
+        if (root.getParent() != null) {
+            root = root.getParent();
+        }
 
         // Heapify
         root = getHighestRoot(heapify(root));
@@ -355,7 +367,8 @@ public class Heap {
      * has been performed.
      * @param filename - The name of the file to read and build a graph from.
      */
-    public void go(String filename) throws FileNotFoundException {
+    public void go(String filename) throws FileNotFoundException,
+                                           NumberFormatException {
         // Read input.
         readPaths(filename);
         // Build tree.
