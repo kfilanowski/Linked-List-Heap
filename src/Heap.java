@@ -4,29 +4,28 @@ import java.io.File;
 import java.util.Scanner;
 
 /**
- * the Heap class where we will build the tree, set all appopriate links and 
- * values to each PathNode in the tree, and Perform a min Heap on the complete tree.
+ * The Heap class where we will build the tree, set all of the appopriate links and 
+ * values to each PathNode in the tree, and perform a min Heap on the complete tree.
  * @author Kevin Filanowski
  * @author Jake Ginn
- * @version 12/4/2018
+ * @version December 2018
  */
 public class Heap {
-	/** Temporary storage for the path nodes */
+	/** Temporary storage for the PathNodes. */
     private ArrayList<PathNode> tempPath;
 
     /**
-     * Default constructor to intialize a heap tree object.
+     * Default constructor to intialize the list of PathNodes.
      */
     public Heap() {
         tempPath = new ArrayList<PathNode>();
     }
 
     /**
-     * Reads inputFile given at the command line and places the contents of each line into the
+     * Reads a file given at the command line and places the contents of each line into the
      * path field found in each PathNode object. The order is the same as found in the text file.
-     * Adds the PathNode object to tempPath starting at tempPath[1].
      * @param inputFile - Name of the input file to be read.
-     * @throws FileNotFoundException - If the input file cannot be found.
+     * @throws FileNotFoundException - If the input file cannot be read or found.
      */
     private void readPaths(String inputFile) throws FileNotFoundException {
         // The input file.
@@ -38,6 +37,7 @@ public class Heap {
         // Used to store the path and pass into a PathNode.
         ArrayList<Integer> path;
 
+        // Store the data in our list of PathNodes.
         while (in.hasNextLine()) {
             path = new ArrayList<Integer>();
             line = in.nextLine().trim(); // Grabs one line from the input file.
@@ -55,15 +55,15 @@ public class Heap {
     /**
      * Recursively builds a complete binary tree. Places PathNode objects in 
      * tempPath into a complete binary tree in order of appearance in the text file. 
-     * @param index - Index of the current node in tempPath.
-     * @param parent - Parent of the current node.
-     * @return - A reference to the last node placed in the tree.
+     * @param index - Index of the current PathNode in tempPath.
+     * @param parent - Parent of the current PathNode.
+     * @return A reference to the last PathNode placed in the tree.
      */
     private PathNode buildCompleteTree(int index, int parent) {
-        // Temporary variable to hold the current node to be inserted.
+        // Temporary variable to hold the current PathNode to be inserted.
         PathNode current = tempPath.get(index);
 
-        // We do not assign a parent to the root node.
+        // We do not assign a parent to the root PathNode.
         if (index != parent) {
             current.setParent(tempPath.get(parent));
             // Set current to be parent's left or right child.
@@ -75,7 +75,7 @@ public class Heap {
             }
         }
 
-        // Base case, Returns the very last node inserted in this graph.
+        // Base case, Returns the very last PathNode inserted in this graph.
         if (index + 1 >= tempPath.size()) {
             current.setIsLastNode(true);
             return getHighestRoot(current);
@@ -87,7 +87,7 @@ public class Heap {
 
     /**
      * Recursive method that sets isLevelEnd.
-     * This is the left node of every level in the tree.
+     * This is the left PathNode of every level in the tree.
      * @param root - Root of the subtree.
      */
     private void setLevelEnd(PathNode root) {
@@ -99,10 +99,10 @@ public class Heap {
     }
 
     /**
-     * Gets the highest root of the entire tree using any node currently in the
+     * Gets the highest root of the entire tree using any PathNode currently in the
      * tree as input.
-     * @param node - Any node in the tree.
-     * @return - The root of the entire tree.
+     * @param node - Any PathNode in the tree.
+     * @return The root of the entire tree.
      */
     private PathNode getHighestRoot(PathNode node) {
         while (node.getParent() != null) {
@@ -113,8 +113,8 @@ public class Heap {
 
     /**
      * Recursive method that sets the "generation" link of PathNode objects from left-to-right.
-     * generation is a term I use to indicate nodes on the same level (these may be siblings or
-     * cousins)
+     * Generation is the term used to indicate PathNodes on the same level. These PathNodes
+     * can include sibling and cousins.
      * @param root - Root of the subtree.
      */
     private void setGenerationLinks(PathNode root) {
@@ -153,12 +153,12 @@ public class Heap {
     }
 
     /**
-     * Swaps two node's generation links.
+     * Swaps two PathNode's generation links.
      * @param root  - The root of any subtree.
      * @param child - The child of the root of the subtree.
      */
     private void swapGenerationLinks(PathNode root, PathNode child) {
-        // Temporary node to reference an extra Pathnode.
+        // Temporary PathNode to reference an extra Pathnode.
         PathNode tempChild;
         // Swap Generation links.
         tempChild = root.getGeneration();
@@ -199,7 +199,7 @@ public class Heap {
         swapIsLastNode(root, child);
         swapGenerationLinks(root, child);
 
-        // Temporary node to reference an extra Pathnode.
+        // Temporary PathNode to reference an extra Pathnode.
         PathNode tempChild;
         
         // Swapping links, Left
@@ -229,7 +229,7 @@ public class Heap {
 
     /**
      * Performs a minimum Heap with the smallest PathNode being at the top and
-     * every child of every node is less than the parent of the child. On the 
+     * every child of every PathNode is less than the parent of the child. On the 
      * case that the children are equal it will always choose the left child to 
      * swap with.
      * It is *highly recommended* that the method startHeapify is used instead,
@@ -237,10 +237,10 @@ public class Heap {
      * These requirements include:
      * 1) Setting the generation links.
      * 2) Setting the level end properties.
-     * 3) Passing into heapify the lowest left node that is not a leaf.
-     * @param root - The lowest non-leaf left node to begin the heapify.
-     * @return - The same node we passed in as a parameter, but the tree
-     * is heapified.
+     * 3) Passing into heapify the lowest left PathNode that is not a leaf.
+     * @param root - The lowest non-leaf left PathNode to begin the heapify.
+     * @return The same PathNode we passed in as a parameter, but the tree
+     *         is heapified.
      */
     private PathNode heapify(PathNode root) {
         // Holds the smallest PathNode of a parent.
@@ -263,7 +263,7 @@ public class Heap {
             heapify(root.getGeneration());
         }
         
-        // Swap PathNodes if child is smaller than parent node.
+        // Swap PathNodes if child is smaller than parent PathNode.
         if (min != null && root.getSize() > min.getSize()) {
             swap(root,min);
             swapped = true;
@@ -292,8 +292,8 @@ public class Heap {
     /**
      * Processes all requirements for heapify to function properly and
      * calls heapify.
-     * @param root - The highest node of the tree to heapify.
-     * @return - The highest node of the heapified tree.
+     * @param root - The highest PathNode of the tree to heapify.
+     * @return The highest PathNode of the heapified tree.
      */
     private PathNode startHeapify(PathNode root) {
         // Pre-requisite processes for heapify.
@@ -304,7 +304,7 @@ public class Heap {
         while (root.getLeft() != null) {
             root = root.getLeft();
         }
-        // Go to the parent. This is our starting node for heapify.
+        // Go to the parent. This is our starting PathNode for heapify.
         root = root.getParent();
 
         // Heapify
@@ -317,8 +317,8 @@ public class Heap {
      * Prints the path lengths from left-to-right at each level in the tree in the form specified
      * by the instructions.
      * @param root - Root of the whole tree to begin printing from.
-     * @return - A formatted string showing the the path lengths from left to
-     * right of each level in the tree.
+     * @return A formatted string showing the the path lengths from left to
+     *         right of each level in the tree.
      */
     private String printTreeLevels(PathNode root) {
         // String builder to append all content to.
@@ -327,7 +327,7 @@ public class Heap {
         PathNode generation;
         // To keep track of levels.
         int i = 0;
-        // Root node.
+        // Root PathNode.
         levels.append(String.format("Root:%15s\n", root));
         root = root.getLeft();
         generation = root;
@@ -365,7 +365,7 @@ public class Heap {
         System.out.println("---------- Before Heapify ----------");
         System.out.println(printTreeLevels(rootPathNode));
 
-        // Heapify
+        // Heapify.
         rootPathNode = startHeapify(rootPathNode);
         
         System.out.println("---------- After Heapify ----------");

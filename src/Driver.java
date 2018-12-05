@@ -1,11 +1,12 @@
 import java.io.FileNotFoundException;
 
 /**
+ * The main driver of the program.
  * Creates a Heap object and calls the go function which will perform a 
  * min heap on the file that is passed in.
  * @author Kevin Filanowski
  * @author Jake Ginn
- * @version 12/4/2018
+ * @version December 2018
  */
 public class Driver {
     /** Heap graph. */
@@ -22,6 +23,7 @@ public class Driver {
      * Runs the go method in Heap, which performs various operations
      * such as reading in input, building a tree, heapifing it, and
      * displaying the results before and after the heapify.
+     * @param filename - The name of the file to read data from.
      */
     private void run(String filename) throws FileNotFoundException {
         heap.go(filename);
