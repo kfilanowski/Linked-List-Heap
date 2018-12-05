@@ -14,7 +14,7 @@ Input File
 DESCRIPTION:
 ------------------
 This program uses a Linked list to build a complete tree, and then applies
-a heapify on it. It takes one file as input, where the text file contains
+ heapify on it. It takes one file as input, where the text file contains
 data about each node to be inserted into the tree. The program will 
 print each level of the tree before and after the heapify.
 
@@ -62,8 +62,9 @@ The program will then proceed to print output, before and after the heapify.
 Input File:
 ------------------
 The input file describes the entire tree. Each line in the file is considered
-to be a PathNode, and on each line, we hold integers, separated by spaces new lines
-to define an edge. The file should not be empty, or contain any non-digit characters.
+to be a PathNode, and on each line, we hold integers, separated by spaces new 
+lines to define an edge. The file should not be empty, or contain any 
+non-digit characters.
 For example: 
 0 4 3
 0 1

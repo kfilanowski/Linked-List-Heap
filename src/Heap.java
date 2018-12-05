@@ -22,8 +22,9 @@ public class Heap {
     }
 
     /**
-     * Reads a file given at the command line and places the contents of each line into the
-     * path field found in each PathNode object. The order is the same as found in the text file.
+     * Reads a file given at the command line and places the contents of each 
+     * line into the path field found in each PathNode object. The order is 
+     * the same as found in the text file.
      * @param inputFile - Name of the input file to be read.
      * @throws FileNotFoundException - If the input file cannot be read or found.
      */
@@ -107,8 +108,8 @@ public class Heap {
     }
 
     /**
-     * Gets the highest root of the entire tree using any PathNode currently in the
-     * tree as input.
+     * Gets the highest root of the entire tree using any PathNode 
+     * currently in the tree as input.
      * @param node - Any PathNode in the tree.
      * @return The root of the entire tree.
      */
@@ -120,9 +121,9 @@ public class Heap {
     }
 
     /**
-     * Recursive method that sets the "generation" link of PathNode objects from left-to-right.
-     * Generation is the term used to indicate PathNodes on the same level. These PathNodes
-     * can include sibling and cousins.
+     * Recursive method that sets the "generation" link of PathNode objects 
+     * from left-to-right.Generation is the term used to indicate PathNodes on 
+     * the same level. These PathNodes can include sibling and cousins.
      * @param root - Root of the subtree.
      */
     private void setGenerationLinks(PathNode root) {
@@ -326,8 +327,8 @@ public class Heap {
     }
     
     /**
-     * Prints the path lengths from left-to-right at each level in the tree in the form specified
-     * by the instructions.
+     * Prints the path lengths from left-to-right at each level in the tree
+     * in the form specified by the instructions.
      * @param root - Root of the whole tree to begin printing from.
      * @return A formatted string showing the the path lengths from left to
      *         right of each level in the tree.

@@ -55,7 +55,8 @@ public class PathNode implements Comparable<PathNode> {
 
     /**
      * Sets the left child of the PathNode.
-     * @param left - The PathNode that will become the left child of the current PathNode.
+     * @param left - The PathNode that will become the left child of the current 
+     *               PathNode.
      */
     public void setLeft(PathNode left) {
         this.left = left;
@@ -71,7 +72,8 @@ public class PathNode implements Comparable<PathNode> {
     
     /**
      * Sets the right child of the current PathNode.
-     * @param right - The PathNode that will become the right child of the current PathNode.
+     * @param right - The PathNode that will become the right child of the 
+     *                current PathNode.
      */
     public void setRight(PathNode right) {
         this.right = right;
@@ -87,7 +89,8 @@ public class PathNode implements Comparable<PathNode> {
 
     /**
      * Sets the parent of the current PathNode.
-     * @param parent - The PathNode that will become the parent of the current PathNode.
+     * @param parent - The PathNode that will become the parent of the current 
+     *                 PathNode.
      */
     public void setParent(PathNode parent) {
         this.parent = parent;
@@ -103,7 +106,8 @@ public class PathNode implements Comparable<PathNode> {
 
     /**
      * Sets the generation link between the current PathNode and its sibling or cousin.
-     * @param node - The sibling or cousin that is being linked to the current PathNode.
+     * @param node - The sibling or cousin that is being linked to the current 
+     *               PathNode.
      */
     public void setGeneration(PathNode node) {
         generation = node;
@@ -120,7 +124,8 @@ public class PathNode implements Comparable<PathNode> {
 
     /**
      * Sets the isLevelEnd property of the PathNode.
-     * @param bool - The boolean value that defines if this PathNode is a level end or not.
+     * @param bool - The boolean value that defines if this PathNode is a level 
+     *               end or not.
      */
     public void setIsLevelEnd(Boolean bool) {
         this.isLevelEnd = bool;
@@ -136,7 +141,8 @@ public class PathNode implements Comparable<PathNode> {
 
     /**
      * Sets the isLevelEnd property of the PathNode.
-     * @param bool - The boolean value that defines if this PathNode is the last PathNode or not.
+     * @param bool - The boolean value that defines if this PathNode is the last 
+     *               PathNode or not.
      */
     public void setIsLastNode(boolean bool) {
         isLastNode = bool;
@@ -144,7 +150,8 @@ public class PathNode implements Comparable<PathNode> {
 
     /**
      * Gets the isLastNode field value.
-     * @return True if the current PathNode is the last PathNode in the tree, false otherwise.
+     * @return True if the current PathNode is the last PathNode in the tree, 
+     *         false otherwise.
      */
     public boolean getIsLastNode() {
         return isLastNode;
@@ -153,8 +160,8 @@ public class PathNode implements Comparable<PathNode> {
     /**
     * Compares the current PathNode's path size to another PathNode's path size.
     * @param other - The other PathNode to compare with.
-    * @return 0 if the sizes are equal, less than 0 if the current path is shorter,
-    * and greater than 0 if the current path is longer than the other.
+    * @return 0 if the sizes are equal, less than 0 if the current path is 
+    * shorter, and greater than 0 if the current path is longer than the other.
     */
     @Override
     public int compareTo(PathNode other) {
