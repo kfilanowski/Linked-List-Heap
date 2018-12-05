@@ -13,23 +13,10 @@ Input File
 
 DESCRIPTION:
 ------------------
-This program is a general database program for Employee records. It takes two
-files as input, admin.txt and faculty.txt, where both text files contain
-information about each Employee. It will create two tables, where each row
-is an employee. There are a number of operations that can be used, such as:
-0) Quit - Exits the program
-1) Intersect - Creates a new table from two tables comprised of records
-that have the same value for a specific attribute.
-2) Difference - Creates a new table comprised of records in one table
-but not another.
-3) Union - Creates a new table comprised of records that occur in both tables.
-4) Select - Creates a new table comprised of nodes having a value for a
-specific attribute
-5) Remove - Removes a table record by a matching ID.
-6) Print both tables.
-
-The program will be fairly picky with the input file, described in the
-section 'INPUT FILE'
+This program uses a Linked list to build a complete tree, and then applies
+a heapify on it. It takes one file as input, where the text file contains
+data about each node to be inserted into the tree. The program will 
+print each level of the tree before and after the heapify.
 
 CONTENTS:
 ------------------
@@ -43,9 +30,12 @@ Driver.java : The main driver of the program. This file should be called
 when the program is to be run. This simply takes a command line argument 
 of a file name and passes it onto Heap to do the processing.
 
-PathNode.java : 
+PathNode.java : A node in the tree. The pathnodes contain a list of integers
+as data as well as links to it's generation, child, and parent.
 
-Heap.java : 
+Heap.java : Performs all of the operations on the tree. Heap will read 
+in the file, build the tree, set the proper links (including generations),
+and heapify the tree after its been built.
 
 input.txt : A sample text file showing an example of what the input file
 should look like.
