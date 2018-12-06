@@ -4,8 +4,9 @@ import java.io.File;
 import java.util.Scanner;
 
 /**
- * The Heap class where we will build the tree, set all of the appopriate links and 
- * values to each PathNode in the tree, and perform a min Heap on the complete tree.
+ * The Heap class where we will build the tree, set all of the appopriate links
+ * and values to each PathNode in the tree, and perform a min Heap on the 
+ * complete tree.
  * @author Kevin Filanowski
  * @author Jake Ginn
  * @version December 2018
@@ -44,12 +45,14 @@ public class Heap {
             path = new ArrayList<Integer>();
             line = in.nextLine().trim(); // Grabs one line from the input file.
             if (line.length() > 0) {
-                // We need to extract each integer from line and place it into the arraylist path.
+                // We need to extract each integer from line and place it into the
+                // arraylist path.
                 String[] arr = line.split("\\s+");
                 for (String s : arr) {
                     path.add(Integer.parseInt(s));
                 }
-                // Then we need to add a new PathNode to tempPath and pass in the path arraylist.
+                // Then we need to add a new PathNode to tempPath and pass in 
+                // the path arraylist.
                 tempPath.add(new PathNode(path));
             }
         }
@@ -63,7 +66,8 @@ public class Heap {
 
     /**
      * Recursively builds a complete binary tree. Places PathNode objects in 
-     * tempPath into a complete binary tree in order of appearance in the text file. 
+     * tempPath into a complete binary tree in order of appearance in the text 
+     * file. 
      * @param index - Index of the current PathNode in tempPath.
      * @param parent - Parent of the current PathNode.
      * @return A reference to the last PathNode placed in the tree.
