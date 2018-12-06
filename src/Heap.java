@@ -345,7 +345,7 @@ public class Heap {
         // To keep track of levels.
         int i = 0;
         // Root PathNode.
-        levels.append(String.format("Root:%15s\n", root));
+        levels.append(String.format("Root:     %s\n", root));
         root = root.getLeft();
         generation = root;
         // While there is a level:
