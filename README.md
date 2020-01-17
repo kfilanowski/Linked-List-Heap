@@ -1,5 +1,6 @@
 # Authors
 Kevin Filanowski
+
 Jake Ginn
 
 # Version
@@ -66,15 +67,25 @@ to be a PathNode, and on each line, we hold integers, separated by spaces new
 lines to define an edge. The file should not be empty, or contain any 
 non-digit characters.
 For example: 
+
 0 4 3
+
 0 1
+
 0 4 1 2 3 
+
 0 1 2 
+
 0 2 
+
 0 4 1 2 
+
 0 2 3 
+
 0 4 
+
 0 1 2 3 
+
 0 4 1
 
 This input will create 10 PathNodes, since there are 10 lines, and each line is
